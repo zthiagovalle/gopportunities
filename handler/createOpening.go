@@ -22,7 +22,7 @@ func CreateOpeningHanlder(ctx *gin.Context) {
 
 	opening := schemas.Opening{
 		Role:     request.Role,
-		Company:  request.Location,
+		Company:  request.Company,
 		Location: request.Location,
 		Remote:   *request.Remote,
 		Link:     request.Link,
