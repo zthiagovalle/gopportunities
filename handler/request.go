@@ -1,6 +1,9 @@
 package handler
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func errParamIsRequired(name, typ string) error {
 	return fmt.Errorf("param: %s (type: %s) is required", name, typ)
@@ -43,4 +46,25 @@ func (r *CreateOpeningRequest) Validate() error {
 	}
 
 	return nil
+}
+
+// UpdateOpening
+
+type UpdateOpeningRequest struct {
+	Role     string `json:"role"`
+	Company  string `json:"company"`
+	Location string `json:"location"`
+	Remote   *bool  `json:"remote"`
+	Link     string `json:"link"`
+	Salary   int64  `json:"salary"`
+}
+
+func (r *UpdateOpeningRequest) Validate() error {
+	// If any field is provied, validation is truthy
+	if r.Role != "" || r.Company != "" || r.Location != "" || r.Remote != nil || r.Link != "" || r.Salary > 0 {
+		return nil
+	}
+
+	// If none of the fields were provided, return falsy
+	return errors.New("at least one valid field must be provided")
 }
